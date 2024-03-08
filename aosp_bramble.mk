@@ -24,6 +24,16 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit_only.mk)
 endif
 $(call inherit-product, $(SRC_TARGET_DIR)/product/generic_system.mk)
 
+# Inherit some common AOSP stuff.
+TARGET_DISABLE_EPPE := true
+$(call inherit-product, vendor/aosp/config/common_full_phone.mk)
+
+# Inherit device configuration
+$(call inherit-product, device/google/bramble/aosp_bramble.mk)
+$(call inherit-product, device/google/redbull/lineage_common.mk)
+
+include device/google/bramble/device-aosp.mk
+
 # Enable mainline checking
 PRODUCT_ENFORCE_ARTIFACT_PATH_REQUIREMENTS := strict
 
@@ -61,8 +71,22 @@ PRODUCT_BUILD_SUPER_PARTITION := false
 # b/113232673 STOPSHIP deal with Qualcomm stuff later
 # PRODUCT_RESTRICT_VENDOR_FILES := all
 
+# Device identifier. This must come after all inclusions
 PRODUCT_MANUFACTURER := Google
 PRODUCT_BRAND := Android
 PRODUCT_NAME := aosp_bramble
 PRODUCT_DEVICE := bramble
-PRODUCT_MODEL := AOSP on bramble
+PRODUCT_MODEL := Pixel 4a (5G)
+
+# Boot animation
+TARGET_SCREEN_HEIGHT := 2340
+TARGET_SCREEN_WIDTH := 1080
+TARGET_BOOT_ANIMATION_RES := 1080
+
+PRODUCT_BUILD_PROP_OVERRIDES += \
+    TARGET_PRODUCT=bramble \
+    PRIVATE_BUILD_DESC="bramble-user 14 UP1A.231105.001.B2 11260668 release-keys"
+
+BUILD_FINGERPRINT := google/bramble/bramble:14/UP1A.231105.001.B2/11260668:user/release-keys
+
+$(call inherit-product, vendor/google/bramble/bramble-vendor.mk)

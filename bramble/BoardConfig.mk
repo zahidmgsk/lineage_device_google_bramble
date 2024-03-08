@@ -32,4 +32,4 @@ else
     -include vendor/google_devices/bramble/proprietary/BoardConfigVendor.mk
 endif
 
-include device/google/bramble/BoardConfigLineage.mk
+include device/google/bramble/BoardConfigAosp.mk
